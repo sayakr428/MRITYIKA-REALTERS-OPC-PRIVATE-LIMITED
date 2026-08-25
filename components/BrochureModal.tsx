@@ -44,10 +44,13 @@ export function BrochureModal({ isOpen, onClose }: BrochureModalProps) {
         // Continue with download even if db log has an issue, but show notice
       }
 
-      // 2. Trigger automatic PPT download
+      // 2. Trigger automatic PPT download from Google Drive
+      const googleDriveUrl =
+        "https://docs.google.com/presentation/d/1nWm1ODwTMj0vowPL0NET_prpzYeEfnJu/export/pptx";
+      
       const link = document.createElement("a");
-      link.href = "/Shantiban-City-Presentation.pptx";
-      link.download = "Shantiban-City-Presentation.pptx";
+      link.href = googleDriveUrl;
+      link.target = "_blank";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -60,6 +63,7 @@ export function BrochureModal({ isOpen, onClose }: BrochureModalProps) {
       setIsSubmitting(false);
     }
   };
+
 
   const resetAndClose = () => {
     setDownloaded(false);
@@ -114,12 +118,17 @@ export function BrochureModal({ isOpen, onClose }: BrochureModalProps) {
                   Thank You, {name || "there"}!
                 </h3>
                 <p className="mt-2 text-ink-soft leading-relaxed">
-                  Your <strong className="text-green-900">Shantiban City Presentation</strong> brochure is now downloading. Our team will get in touch with you shortly.
+                  Your <strong className="text-green-900">Shantiban City Presentation</strong> is downloading directly from Google Drive. Our team will get in touch with you shortly.
                 </p>
-                <div className="mt-6 flex items-center gap-2 rounded-lg bg-green-900/5 px-4 py-3 text-sm font-medium text-green-900">
-                  <FilePpt size={24} className="text-green-800 shrink-0" />
-                  <span>Shantiban-City-Presentation.pptx</span>
-                </div>
+                <a
+                  href="https://docs.google.com/presentation/d/1nWm1ODwTMj0vowPL0NET_prpzYeEfnJu/edit?usp=sharing&ouid=116365462329335930987&rtpof=true&sd=true"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-green-900/10 px-4 py-3 text-sm font-medium text-green-900 transition-colors hover:bg-green-900/20"
+                >
+                  <FilePpt size={20} className="text-green-800 shrink-0" />
+                  <span>View Presentation on Google Drive</span>
+                </a>
                 <button
                   type="button"
                   onClick={resetAndClose}
@@ -127,6 +136,7 @@ export function BrochureModal({ isOpen, onClose }: BrochureModalProps) {
                 >
                   Done
                 </button>
+
               </div>
             ) : (
               <div>
