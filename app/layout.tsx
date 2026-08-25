@@ -54,13 +54,15 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/images/logo-mark.png",
-    shortcut: "/images/logo-mark.png",
-    apple: "/images/logo-mark.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/icon.png",
   },
   robots: { index: true, follow: true },
 };
-
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -76,11 +78,17 @@ export default function RootLayout({
       lang="en"
       className={`${roboto.variable} ${bodoniModa.variable} ${beauRivage.variable}`}
     >
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/icon.png" />
+      </head>
       <body>
         <div className="grain-overlay" aria-hidden="true" />
         <GlassFilter />
         <CustomCursor />
         <IntroMascot />
+
         {children}
       </body>
     </html>
