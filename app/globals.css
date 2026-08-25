@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette — deep forest green and restrained brass-gold over a
+     neutral white ground (not tinted sage/beige). */
+  --color-paper: #ffffff;
+  --color-paper-alt: #f4f4f4;
+  --color-paper-deep: #ececec;
+
+  --color-ink: #16211a;
+  --color-ink-soft: #47554c;
+  --color-ink-faint: #7c8a80;
+
+  --color-green-950: #0a1a12;
+  --color-green-900: #0f2a1d;
+  --color-green-800: #163b27;
+  --color-green-700: #1f4e33;
+  --color-green-600: #2c6642;
+  --color-green-500: #3d7f55;
+  --color-green-400: #5c9a71;
+  --color-green-200: #b9d3c1;
+  --color-green-100: #dde9e0;
+
+  --color-gold-700: #8a6a24;
+  --color-gold-600: #a9822f;
+  --color-gold-500: #c29b45;
+  --color-gold-400: #d4b56a;
+  --color-gold-300: #e4d6ac;
+  --color-gold-100: #f3ecd8;
+
+  --font-display: var(--font-roboto), Helvetica Neue, Helvetica, Ubuntu, "Segoe UI", sans-serif;
+  --font-sans: var(--font-roboto), Helvetica Neue, Helvetica, Ubuntu, "Segoe UI", sans-serif;
+  --font-heading-serif: var(--font-bodoni), "Times New Roman", serif;
+  --font-script: var(--font-beau-rivage), cursive;
+
+  --radius-panel: 0.25rem;
+  --radius-card: 0.25rem;
+  --radius-chip: 0.125rem;
+
+  --shadow-soft: 0 1px 2px rgba(15, 26, 18, 0.05);
+  --shadow-lifted: 0 8px 24px -12px rgba(15, 26, 18, 0.16);
+
+  --ease-out-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  * {
+    border-color: rgba(22, 33, 26, 0.1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-300);
+    color: var(--color-green-900);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-heading-serif {
+    font-family: var(--font-heading-serif);
+  }
+
+  .font-script {
+    font-family: var(--font-script);
+  }
+
+  .container-page {
+    width: 100%;
+    max-width: 1760px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 3vw;
+    }
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @keyframes marquee-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-right {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-marquee-left {
+    animation: marquee-left 46s linear infinite;
+  }
+
+  .animate-marquee-right {
+    animation: marquee-right 38s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ElevenLabs' widget styles its own custom element as `position:fixed;
+   inset:0` internally (a full-viewport host so its expanded chat state has
+   room to fill the screen), which ignores wherever we mount it and made it
+   collide with the mascot at the default corner both land on. This has
+   higher specificity than a plain tag selector would on its own, so the
+   override needs !important to actually win — it shrinks the host to its
+   own content and anchors it beside the mascot instead. */
+elevenlabs-convai {
+  position: fixed !important;
+  inset: auto !important;
+  top: auto !important;
+  left: auto !important;
+  overflow: visible !important;
+  /* An explicit box, not `auto`: the widget's own pill is itself positioned
+     out of normal flow inside its shadow root, so a shrink-to-fit host has
+     nothing in-flow to measure against and collapses toward zero width —
+     which is what was clipping the icon row. A generously sized box gives
+     its internal (likely percentage-based) layout real room to fill. */
+  width: 22rem !important;
+  height: 8rem !important;
+  bottom: 6rem !important;
+  right: 5.25rem !important;
+  z-index: 102 !important;
+}
+
+@media (min-width: 768px) {
+  elevenlabs-convai {
+    bottom: 3.5rem !important;
+    right: 7.5rem !important;
+  }
+}
