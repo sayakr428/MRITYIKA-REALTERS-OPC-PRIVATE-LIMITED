@@ -80,7 +80,7 @@ export function Header({ onOpenBrochure }: HeaderProps) {
           <Wordmark tone="dark" />
         </a>
 
-        <div className="relative z-30 flex items-center justify-end gap-3 md:gap-4">
+        <div className="relative z-30 flex items-center justify-end gap-5">
           <nav className="hidden items-center gap-6 lg:flex" aria-label="Secondary">
             {rightLinks.map((link) => (
               <a
@@ -92,20 +92,11 @@ export function Header({ onOpenBrochure }: HeaderProps) {
               </a>
             ))}
           </nav>
-          
-          <button
-            type="button"
-            onClick={onOpenBrochure}
-            className="hidden items-center gap-1.5 rounded-full border border-green-900/25 bg-white/60 px-4 py-2 text-xs font-semibold text-green-950 transition-all hover:bg-green-900 hover:text-paper sm:inline-flex md:text-sm"
-          >
-            <DownloadSimple size={15} weight="bold" />
-            <span>Brochure</span>
-          </button>
 
           <CTAButton
             href="#enquire"
             variant="primary"
-            className="hidden !rounded-full !px-5 !py-2 text-sm md:inline-flex"
+            className="hidden !rounded-full !px-5 !py-2.5 text-sm md:inline-flex"
           >
             Book a Site Visit
           </CTAButton>
@@ -121,7 +112,6 @@ export function Header({ onOpenBrochure }: HeaderProps) {
           </button>
         </div>
       </div>
-
 
       <AnimatePresence>
         {open ? (
@@ -148,29 +138,16 @@ export function Header({ onOpenBrochure }: HeaderProps) {
                   </motion.a>
                 ))}
               </div>
-              <div className="flex flex-col gap-4">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpen(false);
-                    onOpenBrochure?.();
-                  }}
-                  className="flex items-center justify-center gap-2 rounded-xl bg-paper px-6 py-4 font-semibold text-green-950 shadow-md"
-                >
-                  <DownloadSimple size={20} weight="bold" />
-                  <span>Download Presentation Brochure</span>
-                </button>
-                <motion.a
-                  href={`tel:${phone.tel}`}
-                  initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.06 + allLinks.length * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex items-center gap-2 text-lg text-paper"
-                >
-                  <Phone size={18} weight="regular" />
-                  {phone.display}
-                </motion.a>
-              </div>
+              <motion.a
+                href={`tel:${phone.tel}`}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.06 + allLinks.length * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                className="flex items-center gap-2 text-lg text-paper"
+              >
+                <Phone size={18} weight="regular" />
+                {phone.display}
+              </motion.a>
             </div>
           </motion.div>
         ) : null}
@@ -178,4 +155,5 @@ export function Header({ onOpenBrochure }: HeaderProps) {
     </header>
   );
 }
+
 

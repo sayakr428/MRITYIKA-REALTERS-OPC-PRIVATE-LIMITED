@@ -53,8 +53,14 @@ export const metadata: Metadata = {
     locale: "en_IN",
     type: "website",
   },
+  icons: {
+    icon: "/images/logo-mark.png",
+    shortcut: "/images/logo-mark.png",
+    apple: "/images/logo-mark.png",
+  },
   robots: { index: true, follow: true },
 };
+
 
 export const viewport: Viewport = {
   width: "device-width",

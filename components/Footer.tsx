@@ -41,7 +41,14 @@ export function Footer() {
             </p>
             <p className="max-w-xs text-sm leading-relaxed text-green-200">
               Exclusive Strategic Partner:{" "}
-              <span className="font-semibold text-gold-400">WebGrow360</span>
+              <a
+                href="https://www.webgrow360.online"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-gold-400 underline decoration-gold-400/40 transition-colors hover:text-gold-300 hover:decoration-gold-400"
+              >
+                WebGrow360
+              </a>
             </p>
           </div>
 
@@ -111,11 +118,23 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-paper/10 pt-6 text-xs text-green-300">
+        <div className="flex flex-col gap-2 border-t border-paper/10 pt-6 text-xs text-green-300 sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {new Date().getFullYear()} {project.builder}. All rights reserved.
           </p>
+          <p className="text-green-300/80">
+            Website by{" "}
+            <a
+              href="https://www.webgrow360.online"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-gold-400 underline decoration-gold-400/40 transition-colors hover:text-gold-300 hover:decoration-gold-400"
+            >
+              WebGrow360
+            </a>
+          </p>
         </div>
+
       </div>
     </footer>
   );
