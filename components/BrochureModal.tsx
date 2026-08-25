@@ -46,7 +46,7 @@ export function BrochureModal({ isOpen, onClose }: BrochureModalProps) {
 
       // 2. Trigger automatic PPT download from Google Drive
       const googleDriveUrl =
-        "https://docs.google.com/presentation/d/1nWm1ODwTMj0vowPL0NET_prpzYeEfnJu/export/pptx";
+        "https://docs.google.com/presentation/d/199cDEBbHUYIizEZdZlSjnm7igkXH2E5W/export/pptx";
       
       const link = document.createElement("a");
       link.href = googleDriveUrl;
@@ -121,7 +121,7 @@ export function BrochureModal({ isOpen, onClose }: BrochureModalProps) {
                   Your <strong className="text-green-900">Shantiban City Presentation</strong> is downloading directly from Google Drive. Our team will get in touch with you shortly.
                 </p>
                 <a
-                  href="https://docs.google.com/presentation/d/1nWm1ODwTMj0vowPL0NET_prpzYeEfnJu/edit?usp=sharing&ouid=116365462329335930987&rtpof=true&sd=true"
+                  href="https://docs.google.com/presentation/d/199cDEBbHUYIizEZdZlSjnm7igkXH2E5W/edit?usp=sharing&ouid=116365462329335930987&rtpof=true&sd=true"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-green-900/10 px-4 py-3 text-sm font-medium text-green-900 transition-colors hover:bg-green-900/20"
@@ -129,6 +129,7 @@ export function BrochureModal({ isOpen, onClose }: BrochureModalProps) {
                   <FilePpt size={20} className="text-green-800 shrink-0" />
                   <span>View Presentation on Google Drive</span>
                 </a>
+
                 <button
                   type="button"
                   onClick={resetAndClose}
