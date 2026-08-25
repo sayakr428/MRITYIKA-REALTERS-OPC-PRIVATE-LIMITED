@@ -35,6 +35,19 @@ export function Header({ onOpenBrochure }: HeaderProps) {
     };
   }, [open]);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      setOpen(false);
+      const targetId = href.substring(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", href);
+      }
+    }
+  };
+
   return (
     <header className="fixed inset-x-0 top-4 z-40 flex justify-center px-4 md:top-6">
       <div
@@ -65,6 +78,7 @@ export function Header({ onOpenBrochure }: HeaderProps) {
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="text-sm font-medium text-ink-soft transition-colors duration-300 hover:text-green-900"
             >
               {link.label}
@@ -74,6 +88,7 @@ export function Header({ onOpenBrochure }: HeaderProps) {
 
         <a
           href="#top"
+          onClick={(e) => handleNavClick(e, "#top")}
           className="relative z-30 flex items-center justify-center gap-2 justify-self-start md:justify-self-center"
         >
           <LogoMark className="h-9 w-9" />
@@ -86,12 +101,14 @@ export function Header({ onOpenBrochure }: HeaderProps) {
               <a
                 key={link.href}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="text-sm font-medium text-ink-soft transition-colors duration-300 hover:text-green-900"
               >
                 {link.label}
               </a>
             ))}
           </nav>
+
 
           <CTAButton
             href="#enquire"
@@ -128,7 +145,7 @@ export function Header({ onOpenBrochure }: HeaderProps) {
                   <motion.a
                     key={link.href}
                     href={link.href}
-                    onClick={() => setOpen(false)}
+                    onClick={(e) => handleNavClick(e, link.href)}
                     initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.06 + i * 0.05, ease: [0.16, 1, 0.3, 1] }}
@@ -136,6 +153,7 @@ export function Header({ onOpenBrochure }: HeaderProps) {
                   >
                     {link.label}
                   </motion.a>
+
                 ))}
               </div>
               <motion.a
