@@ -1,24 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+
 import { Header } from "@/components/Header";
 import { HeroSlider } from "@/components/HeroSlider";
 import { TrustBar } from "@/components/TrustBar";
-import { Overview } from "@/components/Overview";
-import { Features } from "@/components/Features";
-import { MasterPlan } from "@/components/MasterPlan";
-import { Amenities } from "@/components/Amenities";
-import { Configurations } from "@/components/Configurations";
-import { LocationAdvantages } from "@/components/LocationAdvantages";
-import { WhyBaruipur } from "@/components/WhyBaruipur";
-import { FAQ } from "@/components/FAQ";
-import { CTASection } from "@/components/CTASection";
-import { Footer } from "@/components/Footer";
-import { MobileStickyBar } from "@/components/MobileStickyBar";
-import { BrochureModal } from "@/components/BrochureModal";
+
+// Dynamically load heavy components below the fold for fast initial paint
+const Overview = dynamic(() => import("@/components/Overview").then((m) => m.Overview));
+const Features = dynamic(() => import("@/components/Features").then((m) => m.Features));
+const MasterPlan = dynamic(() => import("@/components/MasterPlan").then((m) => m.MasterPlan));
+const Amenities = dynamic(() => import("@/components/Amenities").then((m) => m.Amenities));
+const Configurations = dynamic(() => import("@/components/Configurations").then((m) => m.Configurations));
+const LocationAdvantages = dynamic(() => import("@/components/LocationAdvantages").then((m) => m.LocationAdvantages));
+const WhyBaruipur = dynamic(() => import("@/components/WhyBaruipur").then((m) => m.WhyBaruipur));
+const FAQ = dynamic(() => import("@/components/FAQ").then((m) => m.FAQ));
+const CTASection = dynamic(() => import("@/components/CTASection").then((m) => m.CTASection));
+const Footer = dynamic(() => import("@/components/Footer").then((m) => m.Footer));
+const MobileStickyBar = dynamic(() => import("@/components/MobileStickyBar").then((m) => m.MobileStickyBar));
+const BrochureModal = dynamic(() => import("@/components/BrochureModal").then((m) => m.BrochureModal), { ssr: false });
 
 export default function Home() {
   const [isBrochureOpen, setIsBrochureOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  }, []);
 
   const openBrochure = () => setIsBrochureOpen(true);
   const closeBrochure = () => setIsBrochureOpen(false);
@@ -41,7 +54,7 @@ export default function Home() {
       </main>
       <Footer />
       <MobileStickyBar />
-      <BrochureModal isOpen={isBrochureOpen} onClose={closeBrochure} />
+      {isBrochureOpen && <BrochureModal isOpen={isBrochureOpen} onClose={closeBrochure} />}
     </>
   );
 }

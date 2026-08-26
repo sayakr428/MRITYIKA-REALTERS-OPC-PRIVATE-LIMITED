@@ -180,16 +180,18 @@ export type Amenity = {
     | "houseLine"
     | "barbell";
   image?: keyof typeof galleryImages;
-  video?: string;
 };
 
-// The player.cloudinary.com iframe embed leaves a bare, src-less <video> in
-// its initial HTML until its own JS loads and swaps a real source in — a
-// second layer of third-party JS to depend on, nested inside our own
-// GSAP-transformed card. The direct delivery URL is a real, immediately
-// playable video file, so a native <video> tag here is far more reliable.
-const cldVideo = (publicId: string) =>
+export const cldVideo = (publicId: string) =>
   `https://res.cloudinary.com/eranwpa1/video/upload/f_mp4/${publicId}.mp4`;
+
+export const showcaseVideo = {
+  id: "shantiban-video",
+  title: "Shantiban City Overview",
+  description: "Experience the vibrant living, green surroundings, and modern amenities at Shantiban City.",
+  src: cldVideo("Untitled_design"),
+  embedUrl: "https://player.cloudinary.com/embed/?cloud_name=eranwpa1&public_id=Untitled_design",
+};
 
 export const amenities: Amenity[] = [
   {
@@ -204,21 +206,18 @@ export const amenities: Amenity[] = [
     title: "Bare Feet Sensory Path",
     body: "Walk it barefoot, morning or evening.",
     icon: "footprints",
-    video: cldVideo("Initial_Scene_-_2026-08-24_202608250253"),
   },
   {
     code: "03",
     title: "Senior Citizen Deck",
     body: "A quiet, shaded stretch built for slower mornings.",
     icon: "personArmchair",
-    video: cldVideo("Initial_Scene_-_2026-08-24_202608250230"),
   },
   {
     code: "04",
     title: "Orchid Garden",
     body: "A pocket of colour you'll want to walk through daily.",
     icon: "flowerLotus",
-    video: cldVideo("Initial_Scene_-_2026-08-24_202608250115"),
   },
   {
     code: "05",

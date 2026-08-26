@@ -23,10 +23,10 @@ export function MasterPlan() {
 
         <Reveal
           delay={0.05}
-          className="grid grid-cols-2 gap-x-6 gap-y-6 border-t border-green-950/10 pt-6 sm:grid-cols-4"
+          className="grid grid-cols-2 gap-y-6 border-t border-green-950/10 pt-6 text-center justify-items-center sm:grid-cols-4"
         >
           {specs.map((spec) => (
-            <div key={spec.label}>
+            <div key={spec.label} className="flex flex-col items-center text-center">
               <div className="font-display text-xl font-semibold text-green-900 md:text-2xl">
                 {spec.value}
               </div>

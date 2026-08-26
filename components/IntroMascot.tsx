@@ -162,6 +162,7 @@ export function IntroMascot() {
           <video
             ref={videoRef}
             src="/videos/intro-mascot.mp4"
+            preload="metadata"
             autoPlay
             muted
             loop

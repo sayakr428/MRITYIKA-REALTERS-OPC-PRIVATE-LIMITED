@@ -1,9 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { Roboto, Bodoni_Moda, Beau_Rivage } from "next/font/google";
-import { CustomCursor } from "@/components/CustomCursor";
-import { IntroMascot } from "@/components/IntroMascot";
+import dynamic from "next/dynamic";
 import { GlassFilter } from "@/components/GlassFilter";
 import "./globals.css";
+
+// Dynamic imports for UI overlays
+const CustomCursor = dynamic(
+  () => import("@/components/CustomCursor").then((m) => m.CustomCursor)
+);
+const IntroMascot = dynamic(
+  () => import("@/components/IntroMascot").then((m) => m.IntroMascot)
+);
 
 const roboto = Roboto({
   subsets: ["latin"],

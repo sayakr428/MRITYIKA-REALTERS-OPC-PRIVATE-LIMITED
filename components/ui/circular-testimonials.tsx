@@ -71,6 +71,10 @@ export const CircularTestimonials = ({
   const [hoverNext, setHoverNext] = useState(false);
   const [containerWidth, setContainerWidth] = useState(1200);
 
+  // Touch swipe support for mobile
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const autoplayIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -85,6 +89,8 @@ export const CircularTestimonials = ({
     function handleResize() {
       if (imageContainerRef.current) {
         setContainerWidth(imageContainerRef.current.offsetWidth);
+      } else if (typeof window !== "undefined") {
+        setContainerWidth(window.innerWidth);
       }
     }
     handleResize();
@@ -125,13 +131,36 @@ export const CircularTestimonials = ({
     if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
   }, [testimonialsLength]);
 
-  // Compute transforms for each image (always show 3: left, center, right)
+  // Swipe handlers for mobile
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 40;
+    if (distance > minSwipeDistance) {
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      handlePrev();
+    }
+  };
+
+  // Compute transforms for each image
   function getImageStyle(index: number): React.CSSProperties {
     const gap = calculateGap(containerWidth);
     const maxStickUp = gap * 0.45;
     const isActive = index === activeIndex;
     const isLeft = (activeIndex - 1 + testimonialsLength) % testimonialsLength === index;
     const isRight = (activeIndex + 1) % testimonialsLength === index;
+    const isMobile = containerWidth < 768;
+
     if (isActive) {
       return {
         zIndex: 3,
@@ -141,6 +170,18 @@ export const CircularTestimonials = ({
         transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
       };
     }
+
+    // On phone/mobile screens, hide side cards so 1 clean card is displayed without messy 3D side overlap
+    if (isMobile) {
+      return {
+        zIndex: 1,
+        opacity: 0,
+        pointerEvents: "none",
+        transform: `translateX(0px) translateY(0px) scale(0.95) rotateY(0deg)`,
+        transition: "all 0.5s ease-in-out",
+      };
+    }
+
     if (isLeft) {
       return {
         zIndex: 2,
@@ -177,9 +218,15 @@ export const CircularTestimonials = ({
   return (
     <div className="testimonial-container">
       <div className="testimonial-grid">
-        {/* Images with generous padding gap so side images peek out nicely */}
+        {/* Images wrapper */}
         <div className="image-wrapper">
-          <div className="image-container" ref={imageContainerRef}>
+          <div
+            className="image-container"
+            ref={imageContainerRef}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
             {testimonials.map((testimonial, index) => (
               <img
                 key={testimonial.src}
@@ -328,6 +375,7 @@ export const CircularTestimonials = ({
           width: 100%;
           height: 28rem;
           perspective: 1000px;
+          touch-action: pan-y;
         }
         .testimonial-image {
           position: absolute;
@@ -412,12 +460,32 @@ export const CircularTestimonials = ({
           }
         }
         @media (max-width: 959px) {
+          .testimonial-grid {
+            gap: 2.5rem;
+          }
           .image-wrapper {
-            padding-left: 2rem;
-            padding-right: 2rem;
+            padding-left: 0;
+            padding-right: 0;
           }
           .testimonial-content {
             padding-right: 0;
+            min-height: auto;
+          }
+        }
+        @media (max-width: 767px) {
+          .image-container {
+            height: 20rem;
+          }
+          .testimonial-image {
+            border-radius: 1.5rem;
+          }
+        }
+        @media (max-width: 480px) {
+          .image-container {
+            height: 17.5rem;
+          }
+          .testimonial-image {
+            border-radius: 1.25rem;
           }
         }
       `}</style>
