@@ -6,27 +6,6 @@ import { InvestmentCalculator } from "./InvestmentCalculator";
 export function Configurations() {
   return (
     <section className="relative overflow-hidden bg-paper py-12 md:py-20">
-      <video
-        aria-hidden="true"
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="pointer-events-none absolute left-0 top-0 z-0 h-80 w-80 object-contain object-left-top opacity-25 md:h-[32rem] md:w-[32rem] lg:h-[38rem] lg:w-[38rem]"
-      >
-        <source src="/videos/bougainvillea-flowers-01.webm" type="video/webm" />
-      </video>
-      <video
-        aria-hidden="true"
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="pointer-events-none absolute bottom-0 right-0 z-0 h-72 w-72 rotate-180 object-contain object-left-top opacity-20 md:h-[26rem] md:w-[26rem] lg:h-[30rem] lg:w-[30rem]"
-      >
-        <source src="/videos/bougainvillea-flowers-01.webm" type="video/webm" />
-      </video>
-
       <div className="container-page relative z-10 flex flex-col gap-10">
         <SectionHeading
           title="Two ways to invest in one address."

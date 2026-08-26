@@ -161,9 +161,9 @@ export function Amenities() {
           ref={containerRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={() => isPlaying && setShowControls(false)}
-          className="group relative mt-8 overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-black/10"
+          className="group relative mt-6 md:mt-8 overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-black/10"
         >
-          {/* Video Element (Direct MP4 delivery from Cloudinary) */}
+          {/* Video Element */}
           <video
             ref={videoRef}
             src={showcaseVideo.src}
@@ -183,26 +183,31 @@ export function Amenities() {
               type="button"
               onClick={togglePlay}
               aria-label={isPlaying ? "Pause video" : "Start video"}
-              className="pointer-events-auto flex h-16 w-16 md:h-22 md:w-22 transform items-center justify-center rounded-full bg-green-950/80 text-gold-400 backdrop-blur-md transition-all hover:scale-110 hover:bg-green-900 focus:outline-none ring-2 ring-gold-400/60 shadow-2xl"
+              className="pointer-events-auto flex h-14 w-14 sm:h-18 sm:w-18 md:h-22 md:w-22 transform items-center justify-center rounded-full bg-green-950/85 text-gold-400 backdrop-blur-md transition-all hover:scale-110 hover:bg-green-900 focus:outline-none ring-2 ring-gold-400/60 shadow-2xl"
             >
               {isPlaying ? (
-                <Pause size={36} weight="fill" className="translate-x-0" />
+                <Pause size={28} weight="fill" className="sm:hidden" />
               ) : (
-                <Play size={40} weight="fill" className="translate-x-0.5" />
+                <Play size={30} weight="fill" className="translate-x-0.5 sm:hidden" />
+              )}
+              {isPlaying ? (
+                <Pause size={40} weight="fill" className="hidden sm:block" />
+              ) : (
+                <Play size={44} weight="fill" className="translate-x-0.5 hidden sm:block" />
               )}
             </button>
           </div>
 
           {/* Video Title Badge */}
-          <div className="pointer-events-none absolute left-4 top-4 right-4 z-10 flex items-center justify-between">
-            <span className="rounded-full bg-black/60 px-3.5 py-1.5 text-xs font-semibold text-gold-300 backdrop-blur-md border border-gold-400/30">
+          <div className="pointer-events-none absolute left-3 top-3 right-3 sm:left-4 sm:top-4 z-10 flex items-center justify-between">
+            <span className="rounded-full bg-black/65 px-2.5 py-1 text-[11px] sm:text-xs font-semibold text-gold-300 backdrop-blur-md border border-gold-400/30">
               {showcaseVideo.title}
             </span>
           </div>
 
           {/* Custom Control Bar (Bottom) */}
           <div
-            className={`absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-4 md:p-6 transition-opacity duration-300 ${
+            className={`absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-2.5 sm:p-4 md:p-6 transition-opacity duration-300 ${
               showControls || !isPlaying ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -210,29 +215,38 @@ export function Amenities() {
             <div
               ref={progressContainerRef}
               onClick={handleSeek}
-              className="group/bar relative mb-3 h-2 w-full cursor-pointer rounded-full bg-white/30 transition-all hover:h-3"
+              className="group/bar relative mb-2 sm:mb-3 h-1.5 sm:h-2 w-full cursor-pointer rounded-full bg-white/30 transition-all hover:h-2.5"
             >
               <div
                 className="h-full rounded-full bg-gold-400 transition-all"
                 style={{ width: `${progressPercent}%` }}
               />
               <div
-                className="absolute top-1/2 -ml-2 -mt-2 h-4 w-4 rounded-full bg-gold-300 opacity-0 transition-opacity group-hover/bar:opacity-100 shadow"
+                className="absolute top-1/2 -ml-1.5 -mt-1.5 h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-gold-300 opacity-0 transition-opacity group-hover/bar:opacity-100 shadow"
                 style={{ left: `${progressPercent}%` }}
               />
             </div>
 
-            {/* Controls Buttons & Indicators */}
-            <div className="flex flex-wrap items-center justify-between gap-3 text-white">
-              <div className="flex items-center gap-2 md:gap-3">
+            {/* Controls Buttons & Indicators (Strict Single Row) */}
+            <div className="flex items-center justify-between gap-1.5 sm:gap-3 text-white">
+              <div className="flex items-center gap-1.5 sm:gap-2.5">
                 {/* Play / Pause Toggle Button */}
                 <button
                   type="button"
                   onClick={togglePlay}
                   aria-label={isPlaying ? "Pause" : "Play"}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-gold-400 hover:text-green-950"
+                  className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-gold-400 hover:text-green-950"
                 >
-                  {isPlaying ? <Pause size={20} weight="bold" /> : <Play size={20} weight="bold" />}
+                  {isPlaying ? (
+                    <Pause size={16} weight="bold" className="sm:hidden" />
+                  ) : (
+                    <Play size={16} weight="bold" className="sm:hidden" />
+                  )}
+                  {isPlaying ? (
+                    <Pause size={20} weight="bold" className="hidden sm:block" />
+                  ) : (
+                    <Play size={20} weight="bold" className="hidden sm:block" />
+                  )}
                 </button>
 
                 {/* Move Back -10 Seconds Button */}
@@ -241,9 +255,10 @@ export function Amenities() {
                   onClick={() => seekRelative(-10)}
                   aria-label="Go back 10 seconds"
                   title="Go back 10 seconds"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+                  className="flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
-                  <Rewind size={18} weight="bold" />
+                  <Rewind size={14} weight="bold" className="sm:hidden" />
+                  <Rewind size={18} weight="bold" className="hidden sm:block" />
                 </button>
 
                 {/* Move Forward +10 Seconds Button */}
@@ -252,30 +267,37 @@ export function Amenities() {
                   onClick={() => seekRelative(10)}
                   aria-label="Move forward 10 seconds"
                   title="Move forward 10 seconds"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+                  className="flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
-                  <FastForward size={18} weight="bold" />
+                  <FastForward size={14} weight="bold" className="sm:hidden" />
+                  <FastForward size={18} weight="bold" className="hidden sm:block" />
                 </button>
 
                 {/* Timestamp Counter */}
-                <span className="ml-1 text-xs font-medium tracking-wide text-neutral-300">
+                <span className="ml-0.5 text-[10px] sm:text-xs font-medium tracking-wide text-neutral-300 whitespace-nowrap">
                   {formatTime(currentTime)} / {formatTime(duration)}
                 </span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 sm:gap-3">
                 {/* Sound & Volume Control */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     onClick={toggleMute}
                     aria-label={isMuted ? "Unmute" : "Mute"}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+                    className="flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                   >
                     {isMuted || volume === 0 ? (
-                      <SpeakerSlash size={18} weight="bold" />
+                      <>
+                        <SpeakerSlash size={14} weight="bold" className="sm:hidden" />
+                        <SpeakerSlash size={18} weight="bold" className="hidden sm:block" />
+                      </>
                     ) : (
-                      <SpeakerHigh size={18} weight="bold" />
+                      <>
+                        <SpeakerHigh size={14} weight="bold" className="sm:hidden" />
+                        <SpeakerHigh size={18} weight="bold" className="hidden sm:block" />
+                      </>
                     )}
                   </button>
                   <input
@@ -285,7 +307,7 @@ export function Amenities() {
                     step="0.05"
                     value={isMuted ? 0 : volume}
                     onChange={handleVolumeChange}
-                    className="h-1.5 w-16 md:w-24 cursor-pointer accent-gold-400"
+                    className="hidden md:block h-1.5 w-16 md:w-24 cursor-pointer accent-gold-400"
                     aria-label="Volume slider"
                   />
                 </div>
@@ -295,9 +317,19 @@ export function Amenities() {
                   type="button"
                   onClick={toggleFullscreen}
                   aria-label="Toggle Fullscreen"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+                  className="flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
-                  {isFullscreen ? <CornersIn size={18} weight="bold" /> : <CornersOut size={18} weight="bold" />}
+                  {isFullscreen ? (
+                    <>
+                      <CornersIn size={14} weight="bold" className="sm:hidden" />
+                      <CornersIn size={18} weight="bold" className="hidden sm:block" />
+                    </>
+                  ) : (
+                    <>
+                      <CornersOut size={14} weight="bold" className="sm:hidden" />
+                      <CornersOut size={18} weight="bold" className="hidden sm:block" />
+                    </>
+                  )}
                 </button>
               </div>
             </div>
