@@ -20,6 +20,7 @@ const CTASection = dynamic(() => import("@/components/CTASection").then((m) => m
 const Footer = dynamic(() => import("@/components/Footer").then((m) => m.Footer));
 const MobileStickyBar = dynamic(() => import("@/components/MobileStickyBar").then((m) => m.MobileStickyBar));
 const BrochureModal = dynamic(() => import("@/components/BrochureModal").then((m) => m.BrochureModal), { ssr: false });
+const ScrollContactModal = dynamic(() => import("@/components/ScrollContactModal").then((m) => m.ScrollContactModal), { ssr: false });
 
 export default function Home() {
   const [isBrochureOpen, setIsBrochureOpen] = useState(false);
@@ -54,6 +55,7 @@ export default function Home() {
       </main>
       <Footer />
       <MobileStickyBar />
+      <ScrollContactModal />
       {isBrochureOpen && <BrochureModal isOpen={isBrochureOpen} onClose={closeBrochure} />}
     </>
   );
